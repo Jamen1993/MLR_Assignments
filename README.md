@@ -1,2 +1,3 @@
-# Machine_Learning_in_Robotics_Assignments
-Assignments for the SS2019 course Machine Learning in Robotics at TUM.
+# Machine Learning in Robotics Assignments
+
+These are my solutions to the assignments for the *Machine Learning in Robotics* class in SS2019 at TU Munich. All assignments were to be done in Matlab, using only its standard features (no toolboxes allowed).
