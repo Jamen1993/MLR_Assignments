@@ -1,3 +1,12 @@
+# License
+
+## Preamble
+This license only applies to the parts that I have created myself. Data and code provided by the course officials are only distributed for completeness. I don't own them.
+
+The files that I have written myself are denoted with *exercise* in their filename.
+
+## Main Part
+
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
