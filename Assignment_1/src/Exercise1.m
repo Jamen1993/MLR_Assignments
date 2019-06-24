@@ -4,6 +4,8 @@ function par = Exercise1(k)
     load("Data");
 
     %% Divide dataset for k-fold cross validation
+    n = length(Input);
+
     Input = reshape(Input, 2, [], k);
     Output = reshape(Output, 3, [], k);
 
@@ -12,43 +14,70 @@ function par = Exercise1(k)
     %% Estimate parameters for cartesian position
 
     % The model maps velocity and angular speed of rotation (in the robot's coordinate system) to position and orientation (in the world coordinate system). Position and rotation have to be processed separately since their model complexities are independent.
+    %
+    % The mapping function is a1 + a2 * v + a3 * w + a4 * v * w + a5 * v² + a6 * w² + a * (v * w)² + ... where the highest power is determined by the model complexity. The mapping function can be split in parameter vector theta and regressor matrix with y = regressors * theta.
 
-    % Model complexity for cartesian position
-    p1 = 3;
+    function regressors = make_regressor_matrix(ii_training, p)
 
-    function regressors = make_regressor_matrix(indices)
+        regressors = [ones(nset * length(ii_training), 1), zeros(nset * length(ii_training), 3 * p)];
 
-        regressors = [ones(nset * length(indices), 1), zeros(nset * length(indices), 3 * p1)];
+        for itp = 1 : p
 
-        for itp = 1 : p1
-
-            regressors(:, (1 : 3) + 1 + 3 * (itp - 1)) = [vec(Input(1, :, indices)) .^ itp, vec(Input(2, :, indices)) .^ itp, (vec(Input(1, :, indices)) .* vec(Input(2, :, indices))) .^ itp];
+            regressors(:, (1 : 3) + 1 + 3 * (itp - 1)) = [vec(Input(1, :, ii_training)) .^ itp, vec(Input(2, :, ii_training)) .^ itp, (vec(Input(1, :, ii_training)) .* vec(Input(2, :, ii_training))) .^ itp];
 
         end
 
     end
 
-    while true
+    % Test position error
+    pos_error = zeros(6, 1);
+    % Test orientation error
+    ori_error = zeros(6, 1);
 
-        % The mapping function is a1 + a2 * v + a3 * w + a4 * v * w + a5 * v² + a6 * w² + a * (v * w)² + ... where the highest power is determined by the model complexity. The mapping function can be split in parameter vector theta and regressor matrix with y = regressors * theta.
 
-        pos_error = zeros(k, 1);
+    % Iterate over model complexity for cartesian position
+    for p = 1 : 6
+
+        estimated_output = zeros(nset, k, 3);
 
         % Iterate over cross validation folds, the set that should be the test set
         for K = 1 : k
             ii = setdiff(1 : k, K);
 
-            regressors = make_regressor_matrix(ii);
+            regressors = make_regressor_matrix(ii, p);
 
-            % Estimate parameters
-            theta = regressors \ reshape(Output(1 : 2, :, ii), 2, [])';
+            % Estimate parameters with the training sets
+            theta = regressors \ reshape(Output(:, :, ii), 3, [])';
 
-            % Compute position error for the current fold
-            estimated_output = make_regressor_matrix(K) * theta;
-
+            % Estimate output for the test set
+            estimated_output(:, K, :) = make_regressor_matrix(K, p) * theta;
         end
 
+        estimated_output = reshape(estimated_output, [], 3);
 
-        break;
+        % Compute position and orientation errors
+        pos_error(p) = mean(sqrt(sum((reshape(Output(1 : 2, :, :), 2, [])' - estimated_output(:, 1 : 2)) .^ 2, 2)));
+        ori_error(p) = mean(reshape(Output(3, :, :), 1, [])' - estimated_output(:, 3));
     end
+
+    % Determine optimal model complexities
+    [~, p1] = min(pos_error);
+    [~, p2] = min(ori_error);
+
+    % Do final parameter estimation
+    %
+    % Position
+    regressors = make_regressor_matrix(1 : k, p1);
+
+    theta = regressors \ reshape(Output(1 : 2, :, :), 2, [])';
+
+    par{1} = theta(:, 1);
+    par{2} = theta(:, 2);
+
+    % Orientation
+    regressors = make_regressor_matrix(1 : k, p2);
+
+    theta = regressors \ reshape(Output(3, :, :), 1, [])';
+
+    par{3} = theta;
 end
