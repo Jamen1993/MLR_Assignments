@@ -1,5 +1,2 @@
 # Assignment Instructions
 *.pdf
-
-# MNIST Database
-*.idx[13]-ubyte

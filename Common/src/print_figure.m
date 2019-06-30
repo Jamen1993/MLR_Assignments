@@ -1,5 +1,5 @@
 function print_figure(fig, filename)
-    ratio = 4 / 3;
+    ratio = 3 / 2;
 
     w = 30;
     h = w / ratio;

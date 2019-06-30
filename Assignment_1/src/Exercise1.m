@@ -3,7 +3,7 @@ function par = Exercise1(k)
     % Load control input and motion output data
     load("Data");
 
-    %% Divide dataset for k-fold cross validation
+    % Divide dataset for k-fold cross validation
     n = length(Input);
 
     Input = reshape(Input, 2, [], k);
@@ -11,9 +11,9 @@ function par = Exercise1(k)
 
     nset = size(Input, 2);
 
-    %% Estimate parameters for cartesian position
-
-    % The model maps velocity and angular speed of rotation (in the robot's coordinate system) to position and orientation (in the world coordinate system). Position and rotation have to be processed separately since their model complexities are independent.
+    % Estimate parameters
+    %
+    % The model maps velocity and angular speed of rotation (in the robot's coordinate system) to position and orientation (in the world coordinate system). Position and rotation have to be processed separately since their model complexities are independent and can thus be different.
     %
     % The mapping function is a1 + a2 * v + a3 * w + a4 * v * w + a5 * v² + a6 * w² + a * (v * w)² + ... where the highest power is determined by the model complexity. The mapping function can be split in parameter vector theta and regressor matrix with y = regressors * theta.
 
@@ -29,19 +29,20 @@ function par = Exercise1(k)
 
     end
 
-    % Test position error
+    % Position test error
     pos_error = zeros(6, 1);
-    % Test orientation error
+    % Orientation test error
     ori_error = zeros(6, 1);
 
-
-    % Iterate over model complexity for cartesian position
+    % Iterate over model complexity
     for p = 1 : 6
 
+        % Estimated output for the test fold by applying the estimated parameters
         estimated_output = zeros(nset, k, 3);
 
         % Iterate over cross validation folds, the set that should be the test set
         for K = 1 : k
+            % Folds for parameter estimation
             ii = setdiff(1 : k, K);
 
             regressors = make_regressor_matrix(ii, p);
@@ -60,11 +61,11 @@ function par = Exercise1(k)
         ori_error(p) = mean(reshape(Output(3, :, :), 1, [])' - estimated_output(:, 3));
     end
 
-    % Determine optimal model complexities
+    % Determine optimal (by means of smallest test error) model complexities
     [~, p1] = min(pos_error);
     [~, p2] = min(ori_error);
 
-    % Do final parameter estimation
+    % Do final parameter estimation by using all training data, no division in folds
     %
     % Position
     regressors = make_regressor_matrix(1 : k, p1);
