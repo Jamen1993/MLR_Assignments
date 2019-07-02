@@ -5,5 +5,6 @@ function print_figure(fig, filename)
     h = w / ratio;
 
     set(fig, 'PaperOrientation', 'landscape', 'PaperUnits', 'centimeters', 'PaperPosition', [-1 -0.5 w h], 'PaperSize', [w - 2, h - 1]);
+    figure(fig);
     print(filename, '-dpdf');
 end
