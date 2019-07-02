@@ -1,4 +1,4 @@
-function Exercise2(dmax)
+function [fh, dopt, error, confmat] = Exercise2(dmax)
 
     % Load images and labels from MNIST database
     images = loadMNISTImages("train-images.idx3-ubyte");
@@ -51,6 +51,8 @@ function Exercise2(dmax)
 
     % Classification error over data dimensionality
     class_error = zeros(dmax, 1);
+    % Confusion matrix over data dimensionality
+    confmat = zeros(10, 10, dmax);
 
     % Iterate over dimensionality
     for it_d = 1 : dmax
@@ -66,12 +68,30 @@ function Exercise2(dmax)
 
         end
 
+        % Assign class with maximum likelihood
         [~, classified_labels] = max(p, [], 1);
         classified_labels = classified_labels - 1;
 
-        confmat = confusionmat(test_labels, classified_labels);
+        % Compute confusion matrix
+        confmat(:, :, it_d) = confusionmat(test_labels, classified_labels);
 
-        class_error(it_d) = sum(confmat - diag(diag(confmat)), "all") / length(test_images) * 100;
+        % Compute classification error
+        class_error(it_d) = sum(confmat(:, :, it_d) - diag(diag(confmat(:, :, it_d))), "all") / length(test_images) * 100;
 
     end
+
+    % Find optimal data dimensionality
+    [~, dopt] = min(class_error);
+    confmat = confmat(:, :, dopt);
+    error = class_error(dopt);
+
+    % Plot of classification error over data dimensionality
+    fh = figure;
+
+    plot(class_error);
+
+    grid on;
+
+    xlabel("d");
+    ylabel("Classification Error in %");
 end
