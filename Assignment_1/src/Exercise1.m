@@ -56,9 +56,11 @@ function par = Exercise1(k)
 
         estimated_output = reshape(estimated_output, [], 3);
 
-        % Compute position and orientation errors
+        % Compute position
         pos_error(p) = mean(sqrt(sum((reshape(Output(1 : 2, :, :), 2, [])' - estimated_output(:, 1 : 2)) .^ 2, 2)));
-        ori_error(p) = mean(reshape(Output(3, :, :), 1, [])' - estimated_output(:, 3));
+        % and orientation error (formula with power and sqrt cancelled gives significantly different result, probably due to significantly smaller round-off errors, use non cancelled version so that position and orientation error are comparable)
+        ori_error(p) = mean(sqrt((vec(Output(3, :, :)) - estimated_output(:, 3)) .^ 2));
+        % ori_error(p) = mean(vec(Output(3, :, :)) - estimated_output(:, 3));
     end
 
     % Determine optimal (by means of smallest test error) model complexities
