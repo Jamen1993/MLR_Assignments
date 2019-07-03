@@ -1,0 +1,113 @@
+%---------------------------------------------------------------------------
+%       Neue Makros fuer Skript-Erstellung
+%---------------------------------------------------------------------------
+
+%\textwidth      161mm
+%\oddsidemargin  3mm
+%\evensidemargin -5mm
+\parskip        3mm
+%\textheight     229mm
+%\topmargin      -9mm
+%\headsep        3em
+%\addtolength{\topmargin}{-2cm}
+\headheight0cm
+\headsep0cm
+\topskip0cm
+\voffset0cm
+\hoffset0cm
+%\textheight 25cm
+\renewcommand{\topfraction}{.999}
+\renewcommand{\bottomfraction}{.999}
+\renewcommand{\textfraction}{0}
+%\textfloatsep0mm
+%\intextsep0mm
+
+\renewcommand{\thepage}{\sf\sn\an-\arabic{page}}
+\newcommand{\etal}{{\em et al.}}
+%\newcommand{\bm}[1]{\mbox{\boldmath ${#1}$}}
+\newcommand{\bm}[1]{\mbox{${#1}$}}
+\reversemarginpar
+
+\newcommand{\slwortlistlabel}[1]{\mbox{#1}\hfil}
+\newenvironment{slwortlist}[1]{%
+\begin{list}{}
+	{\let\makelabel\slwortlistlabel
+	\settowidth{\labelwidth}{#1}
+	\setlength{\leftmargin}{1.1\labelwidth}}
+}{%
+\end{list}}
+
+\newcommand{\bigzerol}{\smash{\hbox{\bg 0}}}
+\newcommand{\bigzerou}{%
+	\smash{\lower1.7ex\hbox{\bg 0}}}
+\newcommand{\medzerol}{\smash{\hbox{\med 0}}}
+\newcommand{\medzerou}{\smash{\lower0.3ex\hbox{\med 0}}}
+
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{note}{Note}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+
+%\newcommand{\NewR}{{\rm I\hspace{-.07cm}R}}
+\newcommand{\NewR}{{\rm I\hspace{-.17em}R}}
+\newcommand{\NewB}{{\rm I\hspace{-.17em}B}}
+\newcommand{\NewZ}{{\rm Z\hspace{-.35em}Z}}
+\newcommand{\fext}{\bm{f}_{ext}}
+
+%\newcommand{\tbp}[4]{\makebox{\bptfont T}_{#3}\hspace{-4em}\raisebox{0.55em}{\makebox[2em][r]{$\;^{#4}$}} \hspace{0.0em}\raisebox{0.25em}{\makebox{\bpfont #1 \ #2}}}
+\newcommand{\tbp}[4]{^{#4 \,}\makebox{T\hspace{-0.9em}\raisebox{0.1em}{{\bpfont #1 #2}}}_{\, #3}}
+
+\newcommand{\empha}[1]{{\nbs #1}}
+\newcommand{\emphb}[1]{{\it #1}}
+\newcommand{\slwort}[2]{\item[#1] #2}
+
+\newcommand{\rpf}{\rightarrow}
+\newcommand{\Rpf}{\Longrightarrow}
+\newcommand{\lpf}{\leftarrow}
+\newcommand{\Lpf}{\Longleftarrow}
+
+\newcommand{\figlsr}[4]{
+\begin{figure}[ht]
+\setlength{\epsfxsize}{#2} 
+\begin{center}
+\leavevmode
+\epsfbox{#1}
+\caption{#3}
+\label{#4}
+\end{center}
+\vspace*{-1em}
+\end{figure}
+}
+
+\newcommand{\figlsrneb}[4]{
+\begin{minipage}{#2}
+\setlength{\epsfxsize}{#3} 
+\begin{center}
+\leavevmode
+\epsfbox{#1}
+
+#4
+\end{center}
+\end{minipage}
+}
+
+\newcommand{\fref}[1]{Abb. \ref{fig:#1}}
+\newcommand{\tref}[1]{Tab. \ref{tab:#1}}
+\newcommand{\mref}[1]{(\ref{eq:#1})}
+
+\newcommand{\ve}[1]{\underline{#1}}
+\newcommand{\ma}[1]{#1}
+\newcommand{\tr}[1]{#1^T}
+\newcommand{\inv}[1]{#1^{-1}}
+
+\raggedbottom
+%\baselineskip 14pt
+\renewcommand{\baselinestretch}{0.985}
+\renewcommand{\topfraction}{1.0}
+%\setlength{\itemsep}{5mm}
+\def\dddot#1{#1\dot{}\hspace{-0.25em}\dot{}\hspace{-0.25em}\dot{}\hspace{0.5em}}

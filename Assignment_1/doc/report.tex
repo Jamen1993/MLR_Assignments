@@ -1,0 +1,301 @@
+\input UEstyles/abhd
+\usepackage{comment}
+\usepackage{bm}
+\usepackage[colorlinks=true, linkcolor=black]{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{epstopdf}
+\usepackage{placeins}
+
+\newcommand{\an}{3}
+\newcommand{\sn}{ML}
+\newcommand{\lehrveranstaltung}{Machine Learning in Robotics}
+\newcommand{\doctype}{Report for Assignment}
+\newcommand{\no}{1}
+
+\usepackage{bm}
+
+\begin{document}
+\noindent
+\mathindent0cm
+\sf
+
+\input UEstyles/kk
+\vspace*{0.3cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Student:} Simon Diehl \\
+\textbf{Enrollment number:} 03692790 \\
+
+\ul{Exercise 1}: Estimating motion model for a mobile robot by linear regression \\[3mm]
+
+For this exercise the Matlab function \textit{Exercise1.m} is provided
+in the subfolder \textit{Code}. The given dataset \textit{Data.mat} is
+loaded by the function. Please make sure that \textit{Data.mat}
+is available in Matlab's current working directory before executing the function!
+
+a - b): The results are shown in the following table:
+
+\begin{table}[h]
+\small
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$k$  & $p1$ & $p2$ & $par_{x}$ & $par_{y}$ & $par_{\theta}$ \\ \hline\hline
+2  & 5 & 3 & $\begin{bmatrix}
+	\text{2.2063e-003} \\
+	\text{921.7322e-003} \\
+	\text{6.5735e-003} \\
+	\text{-1.6266e-003} \\
+	\text{-991.5760e-006} \\
+	\text{2.4849e-003} \\
+	\text{2.3136e-003} \\
+	\text{-11.6647e-006} \\
+	\text{-13.0057e-003} \\
+	\text{122.6811e-006} \\
+	\text{12.8356e-006} \\
+	\text{-4.4566e-003} \\
+	\text{-43.0989e-006} \\
+	\text{1.6696e-006} \\
+	\text{2.5977e-003} \\
+	\text{-402.3945e-009}
+\end{bmatrix}$
+	 & $\begin{bmatrix}
+   	\text{-2.6949e-003} \\
+   	\text{-1.3581e-003} \\
+   	\text{-11.5383e-003} \\
+   	\text{473.0423e-003} \\
+   	\text{244.5395e-006} \\
+   	\text{-8.2673e-003} \\
+   	\text{74.6931e-006} \\
+   	\text{43.8102e-006} \\
+   	\text{16.4373e-003} \\
+   	\text{-976.9963e-006} \\
+   	\text{-5.2889e-006} \\
+   	\text{4.2985e-003} \\
+   	\text{-4.4187e-006} \\
+   	\text{-269.1060e-009} \\
+   	\text{-3.8127e-003} \\
+	\text{2.1016e-006}
+\end{bmatrix}$ & $\begin{bmatrix}
+\text{-595.1515e-006} \\
+\text{-171.0737e-006} \\
+\text{999.7147e-003} \\
+\text{839.3550e-006} \\
+\text{126.8669e-006} \\
+\text{1.7827e-003} \\
+\text{-141.0469e-006} \\
+\text{-4.5223e-006} \\
+\text{-622.2380e-006} \\
+\text{-13.2209e-006}
+\end{bmatrix}$\\ \hline
+5  & 4 & 5 & $\begin{bmatrix}
+\text{2.5044e-003} \\
+\text{919.7582e-003} \\
+\text{-2.8554e-003} \\
+\text{-743.8466e-006} \\
+\text{-1.0342e-003} \\
+\text{1.3743e-003} \\
+\text{2.4869e-003} \\
+\text{136.0051e-006} \\
+\text{-269.0816e-006} \\
+\text{66.9261e-006} \\
+\text{13.0610e-006} \\
+\text{-4.2816e-003} \\
+\text{-45.1743e-006}
+\end{bmatrix}$ &
+$\begin{bmatrix}
+\text{-4.3238e-003} \\
+\text{-1.0015e-003} \\
+\text{1.4480e-003} \\
+\text{467.9844e-003} \\
+\text{568.4983e-006} \\
+\text{-2.5277e-003} \\
+\text{-1.0251e-003} \\
+\text{19.2455e-006} \\
+\text{-1.6742e-003} \\
+\text{-672.5380e-006} \\
+\text{-7.8462e-006} \\
+\text{3.4766e-003} \\
+\text{8.7155e-006}
+\end{bmatrix}$ &
+$\begin{bmatrix}
+\text{-752.6837e-006} \\
+\text{118.7686e-006} \\
+\text{998.8336e-003} \\
+\text{782.2040e-006} \\
+\text{172.8060e-006} \\
+\text{1.4158e-003} \\
+\text{-106.3142e-006} \\
+\text{-26.3669e-006} \\
+\text{542.7148e-006} \\
+\text{-10.8745e-006} \\
+\text{-983.2847e-009} \\
+\text{79.3210e-006} \\
+\text{-273.2747e-009} \\
+\text{244.8031e-009} \\
+\text{-229.2506e-006} \\
+\text{-6.0710e-009}
+\end{bmatrix}$ \\ \hline
+
+\end{tabular}
+\label{tab:res_exercise_1}
+\end{table}
+
+\FloatBarrier
+\newpage
+
+c): The following two figures show the outcomes of the robot simulation
+
+\begin{figure}[hb]
+	\centering
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_21}
+	\caption{\textit{Simulate\_Robot}$(0, 0.05)$}\label{fig:robot_simulation_2}
+	\end{subfigure}
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_22}
+	\caption{\textit{Simulate\_Robot}$(1, 0)$}\label{fig:robot_simulation_3}
+	\end{subfigure}
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_23}
+	\caption{\textit{Simulate\_Robot}$(1, 0.05)$}\label{fig:robot_simulation_4}
+	\end{subfigure}
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_24}
+	\caption{\textit{Simulate\_Robot}$(-1, -0.05)$}\label{fig:robot_simulation_5}
+	\end{subfigure}
+\caption{Simulation of robot for parameters for $k = 2$}
+\label{fig:robot_simulations}
+\end{figure}
+
+\begin{figure}[hb]
+	\centering
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_51}
+	\caption{\textit{Simulate\_Robot}$(0, 0.05)$}\label{fig:robot_simulation_2}
+	\end{subfigure}
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_52}
+	\caption{\textit{Simulate\_Robot}$(1, 0)$}\label{fig:robot_simulation_3}
+	\end{subfigure}
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_53}
+	\caption{\textit{Simulate\_Robot}$(1, 0.05)$}\label{fig:robot_simulation_4}
+	\end{subfigure}
+	\begin{subfigure}[b]{.45\linewidth}
+	\includegraphics[width=\linewidth]{./images/robot_54}
+	\caption{\textit{Simulate\_Robot}$(-1, -0.05)$}\label{fig:robot_simulation_5}
+	\end{subfigure}
+
+	\caption{Simulation of robot for parameters for $k = 5$}
+	\label{fig:robot_simulations}
+\end{figure}
+
+\FloatBarrier
+\newpage
+
+\ul{Exercise 2}: Handwritten digits classification using Baysian classifier \\[3mm]
+
+The Matlab function \textit{Exercise2.m} is provided
+in the subfolder \textit{Code}. The test and training data is loaded
+by the function. Please make sure that the 4 necessary files
+(\textit{'train-images.idx3-ubyte'},
+\textit{'t10k-images.idx3-ubyte'},...) are available in Matlab's current working directory before executing the function!
+
+The optimal data dimensionality (the one with the smallest classification error) is $d = 48$ and the respective classification error is $3.62~\%$.
+
+
+The confusion matrix for the optimal case is as follows
+
+\begin{center}
+$
+\begin{bmatrix}
+	970 & 0 & 1 & 0 & 0 & 2 & 1 & 1 & 5 & 0 \\
+	0 & 1098 & 11 & 1 & 2 & 1 & 1 & 0 & 21 & 0 \\
+	3 & 0 & 1001 & 3 & 3 & 0 & 2 & 1 & 18 & 1 \\
+	2 & 0 & 8 & 972 & 0 & 5 & 0 & 2 & 17 & 4 \\
+	1 & 0 & 3 & 0 & 964 & 0 & 3 & 2 & 3 & 6 \\
+	2 & 0 & 1 & 18 & 0 & 859 & 2 & 0 & 10 & 0 \\
+	8 & 1 & 1 & 0 & 3 & 13 & 924 & 0 & 8 & 0 \\
+	1 & 2 & 31 & 1 & 2 & 3 & 0 & 956 & 13 & 19 \\
+	3 & 0 & 7 & 10 & 1 & 5 & 1 & 1 & 941 & 5 \\
+	5 & 1 & 10 & 7 & 10 & 2 & 0 & 6 & 15 & 953
+\end{bmatrix}\label{eqn:confusion_matrix}
+$
+\end{center}
+
+where the rows refer to the true class and the columns to the assigned class.
+
+A plot of the classification error vs. data dimensionality is given in figure~\ref{fig:classification_error_over_d}
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[width=\textwidth]{./images/classification_error}
+  \caption{Classification Error vs. data dimensionality}
+  \label{fig:classification_error_over_d}
+\end{figure}
+
+\FloatBarrier
+\newpage
+
+\ul{Exercise 3}: Human motion clustering \\[3mm]
+
+The Matlab functions \textit{Exercise3\_kmeans.m} and
+\textit{Exercise3\_nubs.m} are provided in the subfolder
+\textit{Code}. The input to each function is
+the motion data of a single gesture (e.g. gesture\_l). Please load the
+dataset from \textit{gesture\_dataset.mat} before executing
+the function or use the function \emph{exercise3\_doc} instead which takes care of calling the functions with the proper arguments.
+
+The following plots show the X-Y projection of the datapoints where the colour designates the cluster affiliation.
+
+Figures \ref{fig:k_means_gesture_l} to \ref{fig:k_means_gesture_x} show
+the outcome of \emph{k-means} and figures
+\ref{fig:nubs_gesture_l} to \ref{fig:nubs_gesture_x} the respective outcome of \emph{non-uniform binary split}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./images/kmeans_l}
+  \caption{k-means clustering for gesture l ($k=7$)}
+  \label{fig:k_means_gesture_l}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./images/kmeans_o}
+  \caption{k-means clustering for gesture o ($k=7$)}
+  \label{fig:k_means_gesture_o}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./images/kmeans_x}
+  \caption{k-means clustering for gesture x ($k=7$)}
+  \label{fig:k_means_gesture_x}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./images/nubs_l}
+  \caption{non-uniform binary split clustering for gesture l ($k=7$)}
+  \label{fig:nubs_gesture_l}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./images/nubs_o}
+  \caption{non-uniform binary split clustering for gesture o ($k=7$)}
+  \label{fig:nubs_gesture_o}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./images/nubs_x}
+  \caption{non-uniform binary split clustering for gesture x ($k=7$)}
+  \label{fig:nubs_gesture_x}
+\end{figure}
+
+\end{document}
